@@ -45,7 +45,8 @@ export default {
   },
   methods: {
     startWebSocketConnection() {
-      this.socket = new WebSocket(`ws://server.todak.site/signal`);
+      this.socket = new WebSocket(`wss://server.todak.site/signal`);
+      // this.socket = new WebSocket(`ws://localhost:8080/signal`);
 
       this.socket.onopen = () => {
         console.log(`WebSocket connection opened to Room: #${this.localRoom}`);
