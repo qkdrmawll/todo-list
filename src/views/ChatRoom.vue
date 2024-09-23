@@ -56,6 +56,14 @@ export default {
           data: this.localRoom
         });
       }
+      this.socket.onclose = () => {
+        console.log('Socket has been closed');
+        this.reconnectWebSocket();
+      };
+
+      this.socket.onerror = (message) => {
+        this.handleErrorMessage(`Error: ${message}`);
+      };
       this.socket.onmessage = (msg) => {
         let message = JSON.parse(msg.data);
         console.log(message);
@@ -83,6 +91,12 @@ export default {
             this.handleErrorMessage('Wrong type message received from server');
         }
       };
+    },
+    reconnectWebSocket() {
+      console.log('Attempting to reconnect WebSocket...');
+      setTimeout(() => {
+        this.startWebSocketConnection();  // 5초 후 재연결 시도
+      }, 5000);
     },
     handleOfferMessage(message) {
       console.log('Accepting Offer Message');
@@ -168,7 +182,11 @@ export default {
     },
 
     sendToServer(msg) {
-      this.socket.send(JSON.stringify(msg));
+      if (this.socket.readyState === WebSocket.OPEN) {
+        this.socket.send(JSON.stringify(msg));
+      } else {
+        console.warn('WebSocket is not open. Current state:', this.socket.readyState);
+      }
     },
 
     exitRoom() {
