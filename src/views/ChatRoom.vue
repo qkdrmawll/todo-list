@@ -45,7 +45,9 @@ export default {
   },
   methods: {
     startWebSocketConnection() {
-      this.socket = new WebSocket(`wss://server.todak.site/signal`);
+      this.socket = new WebSocket(`wss://server.todak.site/reservation-service/signal`);
+      // this.socket = new WebSocket(`ws://localhost:54442/signal`);
+      // this.socket = new WebSocket(`ws://localhost:8080/reservation-service/signal`);
       // this.socket = new WebSocket(`ws://localhost:8080/signal`);
 
       this.socket.onopen = () => {

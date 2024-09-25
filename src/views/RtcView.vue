@@ -71,7 +71,7 @@ export default {
         },
         async loadRooms() {
             try {
-                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/api/rooms`);
+                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/reservation-service/api/rooms`);
                 this.rooms = response.data;
             } catch (error) {
                 console.error("API 요청 중 에러 발생:", error);  // 콘솔에 에러 출력
@@ -83,7 +83,7 @@ export default {
             document.getElementById(`button-link-${roomId}`).href = link + "/user/" + localStorage.getItem("uuid");
         },
         async createRoom() {
-            await axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/room/`, { id: this.roomId, uuid: this.uuid }).then(() => {
+            await axios.post(`${process.env.VUE_APP_API_BASE_URL}/reservation-service/api/room/`, { id: this.roomId, uuid: this.uuid }).then(() => {
                 this.loadRooms();
             });
         },
